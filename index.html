@@ -566,6 +566,64 @@ modal.addEventListener('click', (e) => {
         modal.style.display = 'none';
     }
 });
+        // Game Elements
+const icon = document.getElementById('icon');
+const target = document.getElementById('target');
+const gameStatus = document.getElementById('game-status');
+const nav = document.getElementById('nav');
+let isDragging = false;
+let offsetX, offsetY;
+
+// Drag Start
+icon.addEventListener('mousedown', (e) => {
+    isDragging = true;
+    offsetX = e.clientX - icon.offsetLeft;
+    offsetY = e.clientY - icon.offsetTop;
+    icon.style.cursor = 'grabbing';
+});
+
+// Drag Move
+document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+        icon.style.left = e.clientX - offsetX + 'px';
+        icon.style.top = e.clientY - offsetY + 'px';
+        icon.style.transform = 'none'; // Remove centering
+    }
+});
+
+// Drag End
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        icon.style.cursor = 'grab';
+
+        // Check if icon is over target
+        const iconRect = icon.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        if (
+            iconRect.left < targetRect.right &&
+            iconRect.right > targetRect.left &&
+            iconRect.top < targetRect.bottom &&
+            iconRect.bottom > targetRect.top
+        ) {
+            // Success: Unlock
+            gameStatus.textContent = 'Network Unlocked! Descend into the depths...';
+            gameStatus.style.color = '#f48fb1';
+            target.classList.add('unlocked');
+            icon.style.display = 'none'; // Hide icon
+            setTimeout(() => {
+                nav.style.display = 'flex'; // Reveal nav menu
+                document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll to Greeting
+            }, 2000);
+        } else {
+            // Reset position
+            icon.style.left = '50%';
+            icon.style.top = '50%';
+            icon.style.transform = 'translate(-50%, -50%)';
+            gameStatus.textContent = 'Not quite... Try again.';
+        }
+    }
+});
     </script>
 </body>
 </html>
