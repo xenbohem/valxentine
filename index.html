@@ -1,9 +1,9 @@
-<!DOCTYPE html>   
+<!DOCTYPE html>
 <html lang="en">
-<head> 
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Invitation</title>
+    <title>Cybergoth Invitation</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet"> <!-- Esoteric serif font -->
     <style>
         /* Global Styles */
@@ -24,7 +24,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
-            background: url('catcurled33.jpeg') no-repeat center center/cover; /* Cyberpunk neon city image */
+            background: url('https://via.placeholder.com/1920x1080/e91e63/fce4ec?text=Neon+City+Background') no-repeat center center/cover; /* Cyberpunk neon city image */
             text-align: center;
             position: relative;
         }
@@ -167,7 +167,7 @@
             align-items: center;
             text-align: center;
             padding: 20px;
-            background: url('cerul.jpeg') no-repeat center center/cover; /* Cyber circuit texture */
+            background: url('https://via.placeholder.com/1920x1080/c2185b/ba68c8?text=Cyber+Texture') no-repeat center center/cover; /* Cyber circuit texture */
             border-bottom: 2px solid #f48fb1;
             position: relative;
         }
@@ -208,11 +208,79 @@
             text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
             margin-bottom: 20px;
         }
-        /* Add this to enable scrolling on the Valentine floor */
-    #valentine {
-    overflow-y: auto; /* Allows vertical scrolling if content exceeds height */
-    min-height: 100vh; /* Ensures it starts at full height but can grow */
-}
+
+        /* Horizontal Scrolling Gallery (Valentine Floor) */
+        #image-gallery {
+            display: flex;
+            overflow-x: auto; /* Horizontal scrolling */
+            gap: 10px;
+            padding: 10px;
+            max-width: 100%;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #f48fb1 #2d1b69; /* Custom scrollbar colors */
+        }
+
+        #image-gallery::-webkit-scrollbar {
+            height: 8px; /* Thin scrollbar */
+        }
+
+        #image-gallery::-webkit-scrollbar-track {
+            background: #2d1b69; /* Dark track */
+        }
+
+        #image-gallery::-webkit-scrollbar-thumb {
+            background: #f48fb1; /* Rose-red thumb */
+            border-radius: 4px;
+        }
+
+        .gallery-img {
+            width: 100px; /* Tiny thumbnails */
+            height: auto;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s;
+            box-shadow: 0 0 10px rgba(244, 143, 177, 0.5);
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.1); /* Subtle hover effect */
+        }
+
+        /* Modal for Expanded Image */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(244, 143, 177, 0.8);
+        }
+
+        #close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f48fb1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(244, 143, 177, 0.5);
+        }
+
+        #close-modal:hover {
+            color: #ba68c8;
+        }
 
         /* Chat Section for Valentine Floor */
         #chat-section {
@@ -277,6 +345,71 @@
             font-size: 0.8rem;
         }
 
+        /* Game Area (Unlock Floor) */
+        #game-area {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+            background: linear-gradient(45deg, rgba(233, 30, 99, 0.2), rgba(186, 104, 200, 0.3));
+            border-radius: 10px;
+            border: 2px solid #f48fb1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(244, 143, 177, 0.5);
+        }
+
+        .target {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.8), rgba(74, 20, 140, 1));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fce4ec;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(244, 143, 177, 0.8);
+            animation: pulse 2s infinite; /* Pulsing effect */
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.3s;
+            text-shadow: 0 0 15px rgba(244, 143, 177, 0.8);
+        }
+
+        .icon:active {
+            cursor: grabbing;
+            transform: scale(1.2);
+        }
+
+        /* Success Glow */
+        .unlocked {
+            animation: glow 1s ease-in-out;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(244, 143, 177, 1); }
+            100% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.5); }
+        }
+
         /* Floating Nav Menu */
         #nav {
             position: fixed;
@@ -305,70 +438,7 @@
             box-shadow: 0 0 25px rgba(244, 143, 177, 0.9);
             transform: scale(1.1);
         }
-/* Game Area */
-#game-area {
-    position: relative;
-    width: 400px;
-    height: 300px;
-    margin: 20px auto;
-    background: linear-gradient(45deg, rgba(233, 30, 99, 0.2), rgba(186, 104, 200, 0.3));
-    border-radius: 10px;
-    border: 2px solid #f48fb1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-shadow: 0 0 20px rgba(244, 143, 177, 0.5);
-}
 
-.target {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    width: 80px;
-    height: 80px;
-    background: radial-gradient(circle, rgba(186, 104, 200, 0.8), rgba(74, 20, 140, 1));
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #fce4ec;
-    font-size: 1.5rem;
-    text-shadow: 0 0 10px rgba(244, 143, 177, 0.8);
-    animation: pulse 2s infinite; /* Pulsing effect */
-}
-
-@keyframes pulse {
-    0%, 100% { transform: scale(1); }
-    50% { transform: scale(1.1); }
-}
-
-.icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 3rem;
-    cursor: grab;
-    user-select: none;
-    transition: transform 0.3s;
-    text-shadow: 0 0 15px rgba(244, 143, 177, 0.8);
-}
-
-.icon:active {
-    cursor: grabbing;
-    transform: scale(1.2);
-}
-
-/* Success Glow */
-.unlocked {
-    animation: glow 1s ease-in-out;
-}
-
-@keyframes glow {
-    0% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.5); }
-    50% { box-shadow: 0 0 40px rgba(244, 143, 177, 1); }
-    100% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.5); }
-}
         /* Hide elements initially */
         .hidden { display: none; }
     </style>
@@ -376,45 +446,44 @@
 <body>
     <!-- Initial Invitation Page -->
     <div id="invitation">
-        <h1>💜 Invitation 💜</h1>
-        <p>Xen has a message for you.</p>
-        <p>Will you receive it?</p>
+        <h1>🔮 Xen's Invitation 🔮</h1>
+        <p>An elaborate digital message pulses through heartfelt networks.</p>
+        <p>Receive The Message?</p>
         <button id="yes-button">YES</button>
     </div>
 
     <!-- Loading Page -->
     <div id="loading">
-        <h2>Initializing Xen Boheme's Portal...</h2>
+        <h2>Initializing Heart Pathways...</h2>
         <div id="progress-bar">
             <div id="progress-fill"></div>
         </div>
-        <p id="loading-text">Salutations from Xen...</p>
+        <p id="loading-text">Valxentine awakens...</p>
     </div>
 
     <!-- Main Elevator Page -->
     <div id="elevator">
-    <!-- Floating Nav Menu - Initially Hidden -->
-    <div id="nav" style="display: none;">
-        <button class="nav-button" data-floor="greeting">Greeting</button>
-        <button class="nav-button" data-floor="about">About</button>
-        <button class="nav-button" data-floor="we-are">We Are</button>
-        <button class="nav-button" data-floor="project1">Project 1</button>
-        <button class="nav-button" data-floor="valentine">Valentine</button>
-    </div>
-
-    <!-- New Unlock Floor -->
-    <div id="unlock" class="floor">
-        <h2>Unlock the Network</h2>
-        <p>In this shadowed chamber, prove your devotion by aligning the digital heart with the eternal portal. Drag the icon to its destined place to awaken the depths below.</p>
-        <div id="game-area">
-            <div id="target" class="target">🌀 Portal</div> <!-- Target area -->
-            <div id="icon" class="icon" draggable="true">💖</div> <!-- Draggable icon -->
+        <!-- Floating Nav Menu - Initially Hidden -->
+        <div id="nav" style="display: none;">
+            <button class="nav-button" data-floor="greeting">Greeting</button>
+            <button class="nav-button" data-floor="about">About</button>
+            <button class="nav-button" data-floor="we-are">We Are</button>
+            <button class="nav-button" data-floor="project1">Project 1</button>
+            <button class="nav-button" data-floor="valentine">Valentine</button>
         </div>
-        <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Drag the heart into the portal to unlock...</p>
-    </div>
 
-    <!-- Existing Floors (unchanged) -->
-    <div id="greeting" class="floor">
+        <!-- New Unlock Floor -->
+        <div id="unlock" class="floor">
+            <h2>Unlock the Network</h2>
+            <p>In this shadowed chamber, prove your devotion by aligning the digital heart with the eternal portal. Drag the icon to its destined place to awaken the depths below.</p>
+            <div id="game-area">
+                <div id="target" class="target">🌀 Portal</div> <!-- Target area -->
+                <div id="icon" class="icon" draggable="true">💖</div> <!-- Draggable icon -->
+            </div>
+            <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Drag the heart into the portal to unlock...</p>
+        </div>
+
+        <!-- Floors -->
         <div id="greeting" class="floor">
             <img src="https://picsum.photos/400/300?random=1" alt="Cyberpunk Cityscape"> <!-- Replace with your .jpeg -->
             <h2>Greeting Floor</h2>
@@ -436,29 +505,30 @@
             <p>Unveil the genesis of our inaugural venture: a clandestine algorithm born from the marriage of romance and technology. This project deciphers the language of hearts, translating whispers into eternal loops of devotion, where every glitch is a kiss in the machine.</p>
         </div>
         <div id="valentine" class="floor">
-    <h2>Valentine Floor</h2>
-    <p>At the heart of the network lies the pinnacle of our cybergoth odyssey: a sanctuary for Valentine's eternal flame. Here, love transcends binaries, rebooting in infinite cycles. Join the conversation below to weave your threads into this tapestry of digital devotion.</p>
-    <!-- Horizontal Scrolling Image Gallery -->
-    <div id="image-gallery">
-        <img src="https://picsum.photos/200/150?random=5" alt="Valentine Image 1" class="gallery-img" data-full="https://picsum.photos/800/600?random=5"> <!-- Replace with your .jpeg -->
-        <img src="https://picsum.photos/200/150?random=6" alt="Valentine Image 2" class="gallery-img" data-full="https://picsum.photos/800/600?random=6"> <!-- Replace with your .jpeg -->
-        <img src="https://picsum.photos/200/150?random=7" alt="Valentine Image 3" class="gallery-img" data-full="https://picsum.photos/800/600?random=7"> <!-- Replace with your .jpeg -->
+            <h2>Valentine Floor</h2>
+            <p>At the heart of the network lies the pinnacle of our cybergoth odyssey: a sanctuary for Valentine's eternal flame. Here, love transcends binaries, rebooting in infinite cycles. Join the conversation below to weave your threads into this tapestry of digital devotion.</p>
+            <!-- Horizontal Scrolling Image Gallery -->
+            <div id="image-gallery">
+                <img src="https://picsum.photos/200/150?random=5" alt="Valentine Image 1" class="gallery-img" data-full="https://picsum.photos/800/600?random=5"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=6" alt="Valentine Image 2" class="gallery-img" data-full="https://picsum.photos/800/600?random=6"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=7" alt="Valentine Image 3" class="gallery-img" data-full="https://picsum.photos/800/600?random=7"> <!-- Replace with your .jpeg -->
+            </div>
+            <!-- Modal for Expanded Image -->
+            <div id="image-modal" class="modal">
+                <span id="close-modal">&times;</span>
+                <img id="modal-img" src="" alt="Expanded Image">
+            </div>
+            <!-- Threaded Chat Section -->
+            <div id="chat-section">
+                <form id="chat-form">
+                    <input type="text" id="chat-name" placeholder="Your Name" required>
+                    <textarea id="chat-message" placeholder="Your Message" rows="3" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="chat-messages"></div>
+            </div>
+        </div>
     </div>
-    <!-- Modal for Expanded Image -->
-    <div id="image-modal" class="modal">
-        <span id="close-modal">&times;</span>
-        <img id="modal-img" src="" alt="Expanded Image">
-    </div>
-    <!-- Threaded Chat Section -->
-    <div id="chat-section">
-        <form id="chat-form">
-            <input type="text" id="chat-name" placeholder="Your Name" required>
-            <textarea id="chat-message" placeholder="Your Message" rows="3" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-        <div id="chat-messages"></div>
-    </div>
-</div>
 
     <script>
         // Elements
@@ -541,89 +611,91 @@
                 chatMessages.appendChild(msgDiv);
             });
         }
+
         // Modal Elements
-const modal = document.getElementById('image-modal');
-const modalImg = document.getElementById('modal-img');
-const closeModal = document.getElementById('close-modal');
-const galleryImgs = document.querySelectorAll('.gallery-img');
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeModal = document.getElementById('close-modal');
+        const galleryImgs = document.querySelectorAll('.gallery-img');
 
-// Open Modal on Image Click
-galleryImgs.forEach(img => {
-    img.addEventListener('click', () => {
-        modal.style.display = 'flex';
-        modalImg.src = img.getAttribute('data-full'); // Use full-size image
-    });
-});
+        // Open Modal on Image Click
+        galleryImgs.forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                modalImg.src = img.getAttribute('data-full'); // Use full-size image
+            });
+        });
 
-// Close Modal
-closeModal.addEventListener('click', () => {
-    modal.style.display = 'none';
-});
+        // Close Modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
 
-// Close Modal on Outside Click
-modal.addEventListener('click', (e) => {
-    if (e.target === modal) {
-        modal.style.display = 'none';
-    }
-});
+        // Close Modal on Outside Click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
         // Game Elements
-const icon = document.getElementById('icon');
-const target = document.getElementById('target');
-const gameStatus = document.getElementById('game-status');
-const nav = document.getElementById('nav');
-let isDragging = false;
-let offsetX, offsetY;
+        const icon = document.getElementById('icon');
+        const target = document.getElementById('target');
+        const gameStatus = document.getElementById('game-status');
+        const nav = document.getElementById('nav');
+        let isDragging = false;
+        let offsetX, offsetY;
 
-// Drag Start
-icon.addEventListener('mousedown', (e) => {
-    isDragging = true;
-    offsetX = e.clientX - icon.offsetLeft;
-    offsetY = e.clientY - icon.offsetTop;
-    icon.style.cursor = 'grabbing';
-});
+        // Drag Start
+        icon.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - icon.offsetLeft;
+            offsetY = e.clientY - icon.offsetTop;
+            icon.style.cursor = 'grabbing';
+        });
 
-// Drag Move
-document.addEventListener('mousemove', (e) => {
-    if (isDragging) {
-        icon.style.left = e.clientX - offsetX + 'px';
-        icon.style.top = e.clientY - offsetY + 'px';
-        icon.style.transform = 'none'; // Remove centering
-    }
-});
+        // Drag Move
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                icon.style.left = e.clientX - offsetX + 'px';
+                icon.style.top = e.clientY - offsetY + 'px';
+                icon.style.transform = 'none'; // Remove centering
+            }
+        });
 
-// Drag End
-document.addEventListener('mouseup', () => {
-    if (isDragging) {
-        isDragging = false;
-        icon.style.cursor = 'grab';
+        // Drag End
+        document.addEventListener('mouseup', () => {
+            if (isDragging) {
+                isDragging = false;
+                icon.style.cursor = 'grab';
 
-        // Check if icon is over target
-        const iconRect = icon.getBoundingClientRect();
-        const targetRect = target.getBoundingClientRect();
-        if (
-            iconRect.left < targetRect.right &&
-            iconRect.right > targetRect.left &&
-            iconRect.top < targetRect.bottom &&
-            iconRect.bottom > targetRect.top
-        ) {
-            // Success: Unlock
-            gameStatus.textContent = 'Network Unlocked! Descend into the depths...';
-            gameStatus.style.color = '#f48fb1';
-            target.classList.add('unlocked');
-            icon.style.display = 'none'; // Hide icon
-            setTimeout(() => {
-                nav.style.display = 'flex'; // Reveal nav menu
-                document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll to Greeting
-            }, 2000);
-        } else {
-            // Reset position
-            icon.style.left = '50%';
-            icon.style.top = '50%';
-            icon.style.transform = 'translate(-50%, -50%)';
-            gameStatus.textContent = 'Not quite... Try again.';
-        }
-    }
-});
+                // Check if icon is over target
+                const iconRect = icon.getBoundingClientRect();
+                const targetRect = target.getBoundingClientRect();
+                if (
+                    iconRect.left < targetRect.right &&
+                    iconRect.right > targetRect.left &&
+                    iconRect.top < targetRect.bottom &&
+                    iconRect.bottom > targetRect.top
+                ) {
+                    // Success: Unlock
+                    gameStatus.textContent = 'Network Unlocked! Descend into the depths...';
+                    gameStatus.style.color = '#f48fb1';
+                    target.classList.add('unlocked');
+                    icon.style.display = 'none'; // Hide icon
+                    setTimeout(() => {
+                        nav.style.display = 'flex'; // Reveal nav menu
+                        document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll to Greeting
+                    }, 2000);
+                } else {
+                    // Reset position
+                    icon.style.left = '50%';
+                    icon.style.top = '50%';
+                    icon.style.transform = 'translate(-50%, -50%)';
+                    gameStatus.textContent = 'Not quite... Try again.';
+                }
+            }
+        });
     </script>
 </body>
 </html>
