@@ -378,3 +378,223 @@
     </div>
 </div>
 <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Solve the riddle to mend the heart and unlock...</p>
+        </div>
+   <script>
+    // Elements
+    const invitation = document.getElementById('invitation');
+    const loading = document.getElementById('loading');
+    const elevator = document.getElementById('elevator');
+    const yesButton = document.getElementById('yes-button');
+    const progressFill = document.getElementById('progress-fill');
+    const navButtons = document.querySelectorAll('.nav-button');
+    const chatForm = document.getElementById('chat-form');
+    const chatName = document.getElementById('chat-name');
+    const chatMessage = document.getElementById('chat-message');
+    const chatMessages = document.getElementById('chat-messages');
+
+    // Load existing messages from localStorage
+    let messages = JSON.parse(localStorage.getItem('cybergothMessages')) || [];
+    displayMessages();
+
+    // Event: YES Button Click
+    yesButton.addEventListener('click', () => {
+        invitation.style.display = 'none';
+        loading.style.display = 'flex';
+
+        // Simulate loading progress
+        let progress = 0;
+        const interval = setInterval(() => {
+            progress += 10;
+            progressFill.style.width = progress + '%';
+            if (progress >= 100) {
+                clearInterval(interval);
+                // Transition to elevator
+                setTimeout(() => {
+                    loading.style.display = 'none';
+                    elevator.style.display = 'block';
+                    // Smooth reveal
+                    elevator.style.opacity = '0';
+                    setTimeout(() => {
+                        elevator.style.opacity = '1';
+                    }, 100);
+                }, 1000);
+            }
+        }, 200);
+    });
+
+    // Event: Nav Button Clicks (Elevator Navigation)
+    navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const floorId = button.getAttribute('data-floor');
+            const floorElement = document.getElementById(floorId);
+            floorElement.scrollIntoView({ behavior: 'smooth' });
+        });
+    });
+
+    // Event: Chat Form Submit
+    chatForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const name = chatName.value.trim();
+        const message = chatMessage.value.trim();
+        if (name && message) {
+            const newMessage = {
+                name,
+                message,
+                timestamp: new Date().toLocaleString()
+            };
+            messages.unshift(newMessage); // Add to top for threading
+            localStorage.setItem('cybergothMessages', JSON.stringify(messages));
+            displayMessages();
+            chatName.value = '';
+            chatMessage.value = '';
+        }
+    });
+
+    // Function to Display Messages
+    function displayMessages() {
+        chatMessages.innerHTML = '';
+        messages.forEach(msg => {
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'message';
+            msgDiv.innerHTML = `<strong>${msg.name}:</strong> ${msg.message}<br><small>${msg.timestamp}</small>`;
+            chatMessages.appendChild(msgDiv);
+        });
+    }
+
+    // Modal Elements
+    const modal = document.getElementById('image-modal');
+    const modalImg = document.getElementById('modal-img');
+    const closeModal = document.getElementById('close-modal');
+    const galleryImgs = document.querySelectorAll('.gallery-img');
+
+    // Open Modal on Image Click
+    galleryImgs.forEach(img => {
+        img.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            modalImg.src = img.getAttribute('data-full'); // Use full-size image
+        });
+    });
+
+    // Close Modal
+    closeModal.addEventListener('click', () => {
+        modal.style.display = 'none';
+    });
+
+    // Close Modal on Outside Click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+
+    // Game Elements
+    const heartLeft = document.getElementById('heart-left');
+    const heartRight = document.getElementById('heart-right');
+    const gameArea = document.getElementById('game-area');
+    const gameStatus = document.getElementById('game-status');
+    const nav = document.getElementById('nav');
+    let draggedPiece = null;
+    let offsetX, offsetY;
+
+    // Function to start dragging (mouse and touch)
+    function startDrag(e, piece) {
+        draggedPiece = piece;
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        const rect = piece.getBoundingClientRect();
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
+        piece.style.cursor = 'grabbing';
+        piece.style.zIndex = '20'; // Bring to front
+        e.preventDefault();
+    }
+
+    // Function to move dragging
+    function moveDrag(e) {
+        if (draggedPiece) {
+            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+            const gameRect = gameArea.getBoundingClientRect();
+            let newLeft = clientX - offsetX - gameRect.left;
+            let newTop = clientY - offsetY - gameRect.top;
+            // Constrain to game area
+            newLeft = Math.max(0, Math.min(newLeft, gameRect.width - draggedPiece.offsetWidth));
+            newTop = Math.max(0, Math.min(newTop, gameRect.height - draggedPiece.offsetHeight));
+            draggedPiece.style.left = newLeft + 'px';
+            draggedPiece.style.top = newTop + 'px';
+        }
+    }
+
+    // Function to end dragging
+    function endDrag() {
+        if (draggedPiece) {
+            draggedPiece.style.cursor = 'grab';
+            draggedPiece.style.zIndex = '10';
+
+            // Check assembly: Pieces must overlap with target zone
+            const leftRect = heartLeft.getBoundingClientRect();
+            const rightRect = heartRight.getBoundingClientRect();
+            const targetRect = document.getElementById('target-zone').getBoundingClientRect();
+
+            const isAssembled = (
+                leftRect.left < targetRect.right && leftRect.right > targetRect.left &&
+                leftRect.top < targetRect.bottom && leftRect.bottom > targetRect.top &&
+                rightRect.left < targetRect.right && rightRect.right > targetRect.left &&
+                rightRect.top < targetRect.bottom && rightRect.bottom > targetRect.top &&
+                Math.abs(leftRect.left - rightRect.left) < 30 // Ensure they are close together
+            );
+
+            if (isAssembled) {
+                // Success
+                gameStatus.textContent = 'Heart Mended! Network Unlocked...';
+                gameStatus.style.color = '#f48fb1';
+                heartLeft.classList.add('assembled');
+                heartRight.classList.add('assembled');
+                setTimeout(() => {
+                    heartLeft.style.display = 'none';
+                    heartRight.style.display = 'none';
+                    nav.style.display = 'flex';
+                    const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
+                    floors.forEach((floorId, index) => {
+                        setTimeout(() => {
+                            document.getElementById(floorId).style.display = 'flex';
+                            document.getElementById(floorId).style.opacity = '0';
+                            setTimeout(() => {
+                                document.getElementById(floorId).style.opacity = '1';
+                            }, 100);
+                        }, (index + 1) * 1000);
+                    });
+                    setTimeout(() => {
+                        document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+                }, 2000);
+            } else {
+                // Reset
+                heartLeft.style.left = '50px';
+                heartLeft.style.top = '50px';
+                heartLeft.style.right = 'auto';
+                heartRight.style.left = 'auto';
+                heartRight.style.right = '50px';
+                heartRight.style.top = '50px';
+                gameStatus.textContent = 'Pieces don\'t fit... Drag both into the glowing heart outline.';
+            }
+            draggedPiece = null;
+        }
+    }
+
+    // Event Listeners for Mouse
+    [heartLeft, heartRight].forEach(piece => {
+        piece.addEventListener('mousedown', (e) => startDrag(e, piece));
+    });
+    document.addEventListener('mousemove', moveDrag);
+    document.addEventListener('mouseup', endDrag);
+
+    // Event Listeners for Touch (Mobile)
+    [heartLeft, heartRight].forEach(piece => {
+        piece.addEventListener('touchstart', (e) => startDrag(e, piece));
+    });
+    document.addEventListener('touchmove', moveDrag);
+    document.addEventListener('touchend', endDrag);
+</script>
+</body>
+</html>
