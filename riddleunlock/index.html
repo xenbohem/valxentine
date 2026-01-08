@@ -701,90 +701,107 @@
             }
         });
 
-        // Game Elements
-        const riddleAnswer = document.getElementById('riddle-answer');
-        const submitAnswer = document.getElementById('submit-answer');
-        const riddleHint = document.getElementById('riddle-hint');
-        const heartLeft = document.getElementById('heart-left');
-        const heartRight = document.getElementById('heart-right');
-        const gameStatus = document.getElementById('game-status');
-        const nav = document.getElementById('nav');
+        // ... (rest of your script remains the same) ...
 
-        // Function to play gentle F chord
-        function playFChord() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const notes = [349.23, 440, 523.25]; // F4, A4, C5 for F major chord
-            notes.forEach((freq, index) => {
-                setTimeout(() => {
-                    const oscillator = audioContext.createOscillator();
-                    const gainNode = audioContext.createGain();
-                    oscillator.connect(gainNode);
-                    gainNode.connect(audioContext.destination);
-                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
-                    oscillator.type = 'sine';
-                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // Gentle volume
-                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2); // Fade out
-                    oscillator.start();
-                    oscillator.stop(audioContext.currentTime + 2);
-                }, index * 100); // Slight stagger for harmony
-            });
-        }
+// Game Elements
+const riddleAnswer = document.getElementById('riddle-answer');
+const submitAnswer = document.getElementById('submit-answer');
+const riddleHint = document.getElementById('riddle-hint');
+const heartLeft = document.getElementById('heart-left');
+const heartRight = document.getElementById('heart-right');
+const fullHeart = document.getElementById('full-heart');
+const gameStatus = document.getElementById('game-status');
+const nav = document.getElementById('nav');
 
-        // Function to create confetti
-        function createConfetti() {
-            const gameArea = document.getElementById('game-area');
-            for (let i = 0; i < 50; i++) { // 50 particles
-                const confetti = document.createElement('div');
-                confetti.className = 'confetti';
-                confetti.style.left = Math.random() * 100 + '%';
-                confetti.style.animationDelay = Math.random() * 7 + 's'; // Random delay within 7s
-                gameArea.appendChild(confetti);
-            }
-            setTimeout(() => {
-                document.querySelectorAll('.confetti').forEach(c => c.remove()); // Remove after 7s
-            }, 7000);
-        }
+// Progressive Hints
+let hintTimeout1, hintTimeout2;
+function startHints() {
+    hintTimeout1 = setTimeout(() => {
+        riddleHint.textContent = 'Hint: It\'s something you use every day...';
+        riddleHint.style.display = 'block';
+    }, 10000); // 10 seconds
+    hintTimeout2 = setTimeout(() => {
+        riddleHint.textContent = 'Hint: Think of typing and keys!';
+        riddleHint.style.display = 'block';
+    }, 20000); // 20 seconds
+}
+startHints(); // Start hints on load
 
-        submitAnswer.addEventListener('click', () => {
-            const answer = riddleAnswer.value.trim().toLowerCase();
-            if (answer === 'keyboard') { // Correct answer
-                gameStatus.textContent = 'Correct! Heart Mending...';
-                gameStatus.style.color = '#f48fb1';
-                // Play sound and create confetti
-                playFChord();
-                createConfetti();
-                // Animate hearts merging
-                heartLeft.style.transform = 'translateX(25px)';
-                heartRight.style.transform = 'translateX(-25px)';
+// Function to play gentle F chord
+function playFChord() {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const notes = [349.23, 440, 523.25]; // F4, A4, C5 for F major chord
+    notes.forEach((freq, index) => {
+        setTimeout(() => {
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+            oscillator.type = 'sine';
+            gainNode.gain.setValueAtTime(0.15, audioContext.currentTime); // Slightly louder
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2); // Fade out
+            oscillator.start();
+            oscillator.stop(audioContext.currentTime + 2);
+        }, index * 100); // Slight stagger for harmony
+    });
+}
+
+// Function to create confetti
+function createConfetti() {
+    const gameArea = document.getElementById('game-area');
+    for (let i = 0; i < 75; i++) { // More particles for visibility
+        const confetti = document.createElement('div');
+        confetti.className = 'confetti';
+        confetti.style.left = Math.random() * 100 + '%';
+        confetti.style.animationDelay = Math.random() * 7 + 's';
+        gameArea.appendChild(confetti);
+    }
+    setTimeout(() => {
+        document.querySelectorAll('.confetti').forEach(c => c.remove());
+    }, 7000);
+}
+
+submitAnswer.addEventListener('click', () => {
+    clearTimeout(hintTimeout1); // Stop hints on submit
+    clearTimeout(hintTimeout2);
+    const answer = riddleAnswer.value.trim().toLowerCase();
+    if (answer === 'keyboard') { // Correct answer
+        gameStatus.textContent = 'Correct! Heart Mending...';
+        gameStatus.style.color = '#f48fb1';
+        // Play sound and create confetti
+        playFChord();
+        createConfetti();
+        // Animate hearts merging into full heart
+        heartLeft.style.transform = 'translateX(50px) scale(0.8)';
+        heartRight.style.transform = 'translateX(-50px) scale(0.8)';
+        setTimeout(() => {
+            heartLeft.style.opacity = '0';
+            heartRight.style.opacity = '0';
+            fullHeart.style.display = 'block'; // Show full heart
+        }, 500);
+        setTimeout(() => {
+            fullHeart.style.display = 'none';
+            nav.style.display = 'flex';
+            const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
+            floors.forEach((floorId, index) => {
                 setTimeout(() => {
-                    heartLeft.classList.add('merged');
-                    heartRight.classList.add('merged');
-                    heartLeft.style.transform = 'translateX(0)';
-                    heartRight.style.transform = 'translateX(0)';
-                }, 500);
-                setTimeout(() => {
-                    heartLeft.style.display = 'none';
-                    heartRight.style.display = 'none';
-                    nav.style.display = 'flex';
-                    const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
-                    floors.forEach((floorId, index) => {
-                        setTimeout(() => {
-                            document.getElementById(floorId).style.display = 'flex';
-                            document.getElementById(floorId).style.opacity = '0';
-                            setTimeout(() => {
-                                document.getElementById(floorId).style.opacity = '1';
-                            }, 100);
-                        }, (index + 1) * 1000);
-                    });
+                    document.getElementById(floorId).style.display = 'flex';
+                    document.getElementById(floorId).style.opacity = '0';
                     setTimeout(() => {
-                        document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
-                    }, 1000);
-                }, 2000);
-            } else {
-                riddleHint.style.display = 'block';
-                gameStatus.textContent = 'Not quite... Try again.';
-            }
-        });
+                        document.getElementById(floorId).style.opacity = '1';
+                    }, 100);
+                }, (index + 1) * 1000);
+            });
+            setTimeout(() => {
+                document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
+            }, 1000);
+        }, 3000); // Longer to admire the full heart
+    } else {
+        riddleHint.style.display = 'block';
+        gameStatus.textContent = 'Not quite... Try again.';
+    }
+});
     </script>
 </body>
 </html>
