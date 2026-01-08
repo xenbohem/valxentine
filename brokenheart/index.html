@@ -485,12 +485,30 @@
             <h2>Unlock the Network</h2>
             <p>In this chamber, align the digital heart with the Valxentine portal. Drag the icon to its destined place to unlock it.</p>
             <div id="game-area">
-                <div id="target" class="target">🌀 Portal</div> <!-- Target area -->
-                <div id="icon" class="icon" draggable="true">💖</div> <!-- Draggable icon -->
+    <div id="heart-container">
+        <svg id="heart-left" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#e91e63;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ba68c8;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M50 20 C40 10, 20 10, 20 30 L20 50 C20 70, 50 90, 50 90 Z" fill="url(#leftGrad)" stroke="#f48fb1" stroke-width="2"/>
+        </svg>
+        <svg id="heart-right" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="rightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ba68c8;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M50 20 C60 10, 80 10, 80 30 L80 50 C80 70, 50 90, 50 90 Z" fill="url(#rightGrad)" stroke="#f48fb1" stroke-width="2"/>
+        </svg>
+    </div>
+    <div id="target-zone" class="target">💔 Assemble Here</div> <!-- Optional target hint -->
+</div>
+<p id="game-status" style="margin-top: 20px; color: #ba68c8;">Drag the heart pieces together to mend and unlock...</p>
             </div>
-            <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Drag the heart into the portal to unlock...</p>
-        </div>
-
         <!-- Floors -->
         <div id="greeting" class="floor">
             <img src="https://picsum.photos/400/300?random=1" alt="Cyberpunk Cityscape"> <!-- Replace with your .jpeg -->
