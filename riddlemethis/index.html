@@ -348,6 +348,120 @@
             color: #ba68c8;
             font-size: 0.8rem;
         }
+        </head>
+        <body>
+    <!-- Initial Invitation Page -->
+    <div id="invitation">
+        <h1>🔮 Xen's Invitation 🔮</h1>
+        <p>An elaborate digital message pulses through heartfelt networks.</p>
+        <p>Receive The Message?</p>
+        <button id="yes-button">YES</button>
+    </div>
+
+    <!-- Loading Page -->
+    <div id="loading">
+        <h2>Initializing Heart Pathways...</h2>
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
+        <p id="loading-text">Valxentine awakens...</p>
+    </div>
+
+    <!-- Main Elevator Page -->
+    <div id="elevator">
+        <!-- Floating Nav Menu - Initially Hidden -->
+        <div id="nav" style="display: none;">
+            <button class="nav-button" data-floor="greeting">Greeting</button>
+            <button class="nav-button" data-floor="about">About</button>
+            <button class="nav-button" data-floor="we-are">We Are</button>
+            <button class="nav-button" data-floor="project1">Project 1</button>
+            <button class="nav-button" data-floor="valentine">Valentine</button>
+        </div>
+
+        <!-- New Unlock Floor -->
+        <div id="unlock" class="floor">
+            <h2>Unlock the Network</h2>
+            <p>In this chamber, align the digital heart with the Valxentine portal. Drag the icon to its destined place to unlo<div id="game-area">
+    <div id="heart-container">
+        <svg id="heart-left" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#e91e63;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ba68c8;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M50 20 C40 10, 20 10, 20 30 L20 50 C20 70, 50 90, 50 90 Z" fill="url(#leftGrad)" stroke="#f48fb1" stroke-width="2"/>
+        </svg>
+        <svg id="heart-right" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="rightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ba68c8;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M50 20 C60 10, 80 10, 80 30 L80 50 C80 70, 50 90, 50 90 Z" fill="url(#rightGrad)" stroke="#f48fb1" stroke-width="2"/>
+        </svg>
+        <!-- Larger Target Zone -->
+        <div id="target-zone">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                    <linearGradient id="targetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#f48fb1;stop-opacity:0.5" />
+                        <stop offset="100%" style="stop-color:#ba68c8;stop-opacity:0.8" />
+                    </linearGradient>
+                </defs>
+                <path d="M100 40 C80 20, 40 20, 40 60 L40 100 C40 140, 100 180, 100 180 C100 180, 160 140, 160 100 L160 60 C160 20, 120 20, 100 40 Z" fill="none" stroke="url(#targetGrad)" stroke-width="5" stroke-dasharray="10,5"/>
+            </svg>
+            <p>Drag Pieces Here to Assemble</p>
+        </div>
+    </div>
+</div>
+<p id="game-status" style="margin-top: 20px; color: #ba68c8;">Drag the heart pieces into the glowing outline to mend and unlock...</p>
+            </div>
+        <!-- Floors -->
+        <div id="greeting" class="floor">
+            <img src="https://picsum.photos/400/300?random=1" alt="Cyberpunk Cityscape"> <!-- Replace with your .jpeg -->
+            <h2>Greetings</h2>
+            <p>Welcome to Xen's digital Valentine realm, where valentine and Xen fuse together for one time in this year of 2026.</p>
+        </div>
+        <div id="about" class="floor">
+            <img src="https://picsum.photos/400/300?random=2" alt="Holographic Hearts"> <!-- Replace with your .jpeg -->
+            <h2>About Val(xen)tine</h2>
+            <p>Dive into the core of our parallel atmosphere: a fusion of quests and lore. This space explores the duality of creation and love through quests and lore.</p>
+        </div>
+        <div id="we-are" class="floor">
+            <img src="https://picsum.photos/400/300?random=3" alt="Digital Avatars"> <!-- Replace with your .jpeg -->
+            <h2>We Are Love</h2>
+            <p>Behold the collective identity of our enigmatic collective. We are the architects of unseen codes, the poets of pixelated prose, and the guardians of timeless bonds. In this realm, individuality dissolves into a shared art, unity in collaboration.</p>
+        </div>
+        <div id="project1" class="floor">
+            <img src="https://picsum.photos/400/300?random=4" alt="Neon Circuits"> <!-- Replace with your .jpeg -->
+            <h2>Project Chimera</h2>
+            <p>Unveil Xen's venture: a science experiment gone wrong but the subjects hero has other plans for them. This project is extensive.</p>
+        </div>
+        <div id="valentine" class="floor">
+            <h2>Valentine Floor</h2>
+            <p>At the heart of the network lies the pinnacle of a sanctuary for Valentine's eternal flame. Here, love transcends binaries, rebooting in infinite cycles. Join the conversation below to weave your threads into this tapestry of digital creation.</p>
+            <!-- Horizontal Scrolling Image Gallery -->
+            <div id="image-gallery">
+                <img src="https://picsum.photos/200/150?random=5" alt="Valentine Image 1" class="gallery-img" data-full="https://picsum.photos/800/600?random=5"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=6" alt="Valentine Image 2" class="gallery-img" data-full="https://picsum.photos/800/600?random=6"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=7" alt="Valentine Image 3" class="gallery-img" data-full="https://picsum.photos/800/600?random=7"> <!-- Replace with your .jpeg -->
+            </div>
+            <!-- Modal for Expanded Image -->
+            <div id="image-modal" class="modal">
+                <span id="close-modal">&times;</span>
+                <img id="modal-img" src="" alt="Expanded Image">
+            </div>
+            <!-- Threaded Chat Section -->
+            <div id="chat-section">
+                <form id="chat-form">
+                    <input type="text" id="chat-name" placeholder="Your Name" required>
+                    <textarea id="chat-message" placeholder="Your Message" rows="3" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="chat-messages"></div>
+            </div>
 /* Game Area */
         <div id="game-area">
     <div id="riddle-container">
