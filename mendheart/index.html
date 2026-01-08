@@ -663,8 +663,7 @@
                 modal.style.display = 'none';
             }
         });
-
-        // Game Elements
+// Game Elements
 const heartLeft = document.getElementById('heart-left');
 const heartRight = document.getElementById('heart-right');
 const gameStatus = document.getElementById('game-status');
@@ -672,45 +671,48 @@ const nav = document.getElementById('nav');
 let draggedPiece = null;
 let offsetX, offsetY;
 
-// Drag Start
-[heartLeft, heartRight].forEach(piece => {
-    piece.addEventListener('mousedown', (e) => {
-        draggedPiece = piece;
-        offsetX = e.clientX - piece.getBoundingClientRect().left;
-        offsetY = e.clientY - piece.getBoundingClientRect().top;
-        piece.style.cursor = 'grabbing';
-    });
-});
+// Function to start dragging (mouse and touch)
+function startDrag(e, piece) {
+    draggedPiece = piece;
+    const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+    const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+    offsetX = clientX - piece.getBoundingClientRect().left;
+    offsetY = clientY - piece.getBoundingClientRect().top;
+    piece.style.cursor = 'grabbing';
+    e.preventDefault(); // Prevent scrolling on touch
+}
 
-// Drag Move
-document.addEventListener('mousemove', (e) => {
+// Function to move dragging
+function moveDrag(e) {
     if (draggedPiece) {
-        draggedPiece.style.left = e.clientX - offsetX + 'px';
-        draggedPiece.style.top = e.clientY - offsetY + 'px';
-        draggedPiece.style.transform = 'none'; // Remove any default transform
+        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
+        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
+        draggedPiece.style.left = clientX - offsetX + 'px';
+        draggedPiece.style.top = clientY - offsetY + 'px';
+        draggedPiece.style.transform = 'none';
     }
-});
+}
 
-// Drag End
-document.addEventListener('mouseup', () => {
+// Function to end dragging
+function endDrag() {
     if (draggedPiece) {
         draggedPiece.style.cursor = 'grab';
 
-        // Check if pieces are assembled (overlapping in target zone)
+        // Check assembly: Pieces must overlap with target zone
         const leftRect = heartLeft.getBoundingClientRect();
         const rightRect = heartRight.getBoundingClientRect();
         const targetRect = document.getElementById('target-zone').getBoundingClientRect();
 
-        // Simple overlap check: both pieces near the center and overlapping
-        const isOverlapping = (
-            Math.abs(leftRect.left - rightRect.left) < 20 && // Close horizontally
-            Math.abs(leftRect.top - rightRect.top) < 20 &&  // Close vertically
+        const isAssembled = (
             leftRect.left < targetRect.right && leftRect.right > targetRect.left &&
-            leftRect.top < targetRect.bottom && leftRect.bottom > targetRect.top
+            leftRect.top < targetRect.bottom && leftRect.bottom > targetRect.top &&
+            rightRect.left < targetRect.right && rightRect.right > targetRect.left &&
+            rightRect.top < targetRect.bottom && rightRect.bottom > targetRect.top &&
+            Math.abs(leftRect.left - rightRect.left) < 30 // Ensure they are close together
         );
 
-        if (isOverlapping) {
-            // Success: Assemble and unlock
+        if (isAssembled) {
+            // Success
             gameStatus.textContent = 'Heart Mended! Network Unlocked...';
             gameStatus.style.color = '#f48fb1';
             heartLeft.classList.add('assembled');
@@ -719,7 +721,6 @@ document.addEventListener('mouseup', () => {
                 heartLeft.style.display = 'none';
                 heartRight.style.display = 'none';
                 nav.style.display = 'flex';
-                // Systematically reveal floors
                 const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
                 floors.forEach((floorId, index) => {
                     setTimeout(() => {
@@ -735,17 +736,32 @@ document.addEventListener('mouseup', () => {
                 }, 1000);
             }, 2000);
         } else {
-            // Reset positions
-            heartLeft.style.left = '0';
-            heartLeft.style.top = '0';
+            // Reset
+            heartLeft.style.left = '50px';
+            heartLeft.style.top = '50px';
             heartLeft.style.transform = 'none';
             heartRight.style.left = 'auto';
-            heartRight.style.top = '0';
+            heartRight.style.top = '50px';
             heartRight.style.transform = 'none';
-            gameStatus.textContent = 'Pieces don\'t fit... Try again.';
+            gameStatus.textContent = 'Pieces don\'t fit... Drag both into the glowing heart outline.';
         }
         draggedPiece = null;
     }
+}
+
+// Event Listeners for Mouse
+[heartLeft, heartRight].forEach(piece => {
+    piece.addEventListener('mousedown', (e) => startDrag(e, piece));
+});
+document.addEventListener('mousemove', moveDrag);
+document.addEventListener('mouseup', endDrag);
+
+// Event Listeners for Touch (Mobile)
+[heartLeft, heartRight].forEach(piece => {
+    piece.addEventListener('touchstart', (e) => startDrag(e, piece));
+});
+document.addEventListener('touchmove', moveDrag);
+document.addEventListener('touchend', endDrag);
 });
     </script>
 </body>
