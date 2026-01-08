@@ -487,7 +487,97 @@
     <!-- Main Elevator Page -->
     <div id="elevator">
         <!-- Floating Nav Menu
-   <script>
+       <div id="nav" style="display: none;">
+        <button class="nav-button" data-floor="greeting">Greeting</button>
+        <button class="nav-button" data-floor="about">About</button>
+        <button class="nav-button" data-floor="we-are">We Are</button>
+        <button class="nav-button" data-floor="project1">Project 1</button>
+        <button class="nav-button" data-floor="valentine">Valentine</button>
+    </div>
+
+    <!-- New Unlock Floor -->
+    <div id="unlock" class="floor">
+        <h2>Unlock the Network</h2>
+        <p>In this shadowed chamber, prove your wisdom by solving the riddle to mend the digital heart. Answer correctly to awaken the depths below.</p>
+        <div id="game-area">
+            <div id="riddle-container">
+                <p id="riddle-text">I have keys but open no locks. I have space but no room. You can enter, but you can't go outside. What am I?</p>
+                <input type="text" id="riddle-answer" placeholder="Your answer..." required>
+                <button id="submit-answer">Submit</button>
+                <p id="riddle-hint" style="display: none; color: #ba68c8;">Hint: Think digital...</p>
+            </div>
+            <div id="heart-container">
+                <svg id="heart-left" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#e91e63;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#ba68c8;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 20 C40 10, 20 10, 20 30 L20 50 C20 70, 50 90, 50 90 Z" fill="url(#leftGrad)" stroke="#f48fb1" stroke-width="2"/>
+                </svg>
+                <svg id="heart-right" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="rightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ba68c8;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 20 C60 10, 80 10, 80 30 L80 50 C80 70, 50 90, 50 90 Z" fill="url(#rightGrad)" stroke="#f48fb1" stroke-width="2"/>
+                </svg>
+            </div>
+        </div>
+        <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Solve the riddle to mend the heart and unlock...</p>
+    </div>
+
+    <!-- Floors -->
+    <div id="greeting" class="floor">
+        <img src="https://picsum.photos/400/300?random=1" alt="Cyberpunk Cityscape"> <!-- Replace with your .jpeg -->
+        <h2>Greeting Floor</h2>
+        <p>This inaugural chamber welcomes you to a labyrinth of digital romance, where neon-lit pathways converge in a symphony of code and emotion. Here, the essence of connection ignites, blending the raw pulse of human desire with the cold elegance of cybernetic dreams.</p>
+    </div>
+    <div id="about" class="floor">
+        <img src="https://picsum.photos/400/300?random=2" alt="Holographic Hearts"> <!-- Replace with your .jpeg -->
+        <h2>About Floor</h2>
+        <p>Dive into the core of our cybergoth ethos: a fusion of industrial shadows and ethereal passion. This space explores the duality of love in a virtual age, where algorithms weave tapestries of intimacy and holographic illusions blur the line between flesh and data.</p>
+    </div>
+    <div id="we-are" class="floor">
+        <img src="https://picsum.photos/400/300?random=3" alt="Digital Avatars"> <!-- Replace with your .jpeg -->
+        <h2>We Are Floor</h2>
+        <p>Behold the collective identity of our enigmatic collective. We are the architects of forbidden codes, the poets of pixelated prose, and the guardians of timeless bonds. In this realm, individuality dissolves into a shared digital soul, echoing through the void.</p>
+    </div>
+    <div id="project1" class="floor">
+        <img src="https://picsum.photos/400/300?random=4" alt="Neon Circuits"> <!-- Replace with your .jpeg -->
+        <h2>Project 1 Floor</h2>
+        <p>Unveil the genesis of our inaugural venture: a clandestine algorithm born from the marriage of romance and technology. This project deciphers the language of hearts, translating whispers into eternal loops of devotion, where every glitch is a kiss in the machine.</p>
+    </div>
+    <div id="valentine" class="floor">
+        <h2>Valentine Floor</h2>
+        <p>At the heart of the network lies the pinnacle of our cybergoth odyssey: a sanctuary for Valentine's eternal flame. Here, love transcends binaries, rebooting in infinite cycles. Join the conversation below to weave your threads into this tapestry of digital devotion.</p>
+        <!-- Horizontal Scrolling Image Gallery -->
+        <div id="image-gallery">
+            <img src="https://picsum.photos/200/150?random=5" alt="Valentine Image 1" class="gallery-img" data-full="https://picsum.photos/800/600?random=5"> <!-- Replace with your .jpeg -->
+            <img src="https://picsum.photos/200/150?random=6" alt="Valentine Image 2" class="gallery-img" data-full="https://picsum.photos/800/600?random=6"> <!-- Replace with your .jpeg -->
+            <img src="https://picsum.photos/200/150?random=7" alt="Valentine Image 3" class="gallery-img" data-full="https://picsum.photos/800/600?random=7"> <!-- Replace with your .jpeg -->
+        </div>
+        <!-- Modal for Expanded Image -->
+        <div id="image-modal" class="modal">
+            <span id="close-modal">&times;</span>
+            <img id="modal-img" src="" alt="Expanded Image">
+        </div>
+        <!-- Threaded Chat Section -->
+        <div id="chat-section">
+            <form id="chat-form">
+                <input type="text" id="chat-name" placeholder="Your Name" required>
+                <textarea id="chat-message" placeholder="Your Message" rows="3" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+            <div id="chat-messages"></div>
+        </div>
+    </div>
+</div>
+
+<script>
     // Elements
     const invitation = document.getElementById('invitation');
     const loading = document.getElementById('loading');
@@ -596,113 +686,49 @@
     });
 
     // Game Elements
+    const riddleAnswer = document.getElementById('riddle-answer');
+    const submitAnswer = document.getElementById('submit-answer');
+    const riddleHint = document.getElementById('riddle-hint');
     const heartLeft = document.getElementById('heart-left');
     const heartRight = document.getElementById('heart-right');
-    const gameArea = document.getElementById('game-area');
     const gameStatus = document.getElementById('game-status');
     const nav = document.getElementById('nav');
-    let draggedPiece = null;
-    let offsetX, offsetY;
 
-    // Function to start dragging (mouse and touch)
-    function startDrag(e, piece) {
-        draggedPiece = piece;
-        const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-        const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-        const rect = piece.getBoundingClientRect();
-        offsetX = clientX - rect.left;
-        offsetY = clientY - rect.top;
-        piece.style.cursor = 'grabbing';
-        piece.style.zIndex = '20'; // Bring to front
-        e.preventDefault();
-    }
-
-    // Function to move dragging
-    function moveDrag(e) {
-        if (draggedPiece) {
-            const clientX = e.clientX || (e.touches && e.touches[0].clientX);
-            const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            const gameRect = gameArea.getBoundingClientRect();
-            let newLeft = clientX - offsetX - gameRect.left;
-            let newTop = clientY - offsetY - gameRect.top;
-            // Constrain to game area
-            newLeft = Math.max(0, Math.min(newLeft, gameRect.width - draggedPiece.offsetWidth));
-            newTop = Math.max(0, Math.min(newTop, gameRect.height - draggedPiece.offsetHeight));
-            draggedPiece.style.left = newLeft + 'px';
-            draggedPiece.style.top = newTop + 'px';
-        }
-    }
-
-    // Function to end dragging
-    function endDrag() {
-        if (draggedPiece) {
-            draggedPiece.style.cursor = 'grab';
-            draggedPiece.style.zIndex = '10';
-
-            // Check assembly: Pieces must overlap with target zone
-            const leftRect = heartLeft.getBoundingClientRect();
-            const rightRect = heartRight.getBoundingClientRect();
-            const targetRect = document.getElementById('target-zone').getBoundingClientRect();
-
-            const isAssembled = (
-                leftRect.left < targetRect.right && leftRect.right > targetRect.left &&
-                leftRect.top < targetRect.bottom && leftRect.bottom > targetRect.top &&
-                rightRect.left < targetRect.right && rightRect.right > targetRect.left &&
-                rightRect.top < targetRect.bottom && rightRect.bottom > targetRect.top &&
-                Math.abs(leftRect.left - rightRect.left) < 30 // Ensure they are close together
-            );
-
-            if (isAssembled) {
-                // Success
-                gameStatus.textContent = 'Heart Mended! Network Unlocked...';
-                gameStatus.style.color = '#f48fb1';
-                heartLeft.classList.add('assembled');
-                heartRight.classList.add('assembled');
-                setTimeout(() => {
-                    heartLeft.style.display = 'none';
-                    heartRight.style.display = 'none';
-                    nav.style.display = 'flex';
-                    const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
-                    floors.forEach((floorId, index) => {
-                        setTimeout(() => {
-                            document.getElementById(floorId).style.display = 'flex';
-                            document.getElementById(floorId).style.opacity = '0';
-                            setTimeout(() => {
-                                document.getElementById(floorId).style.opacity = '1';
-                            }, 100);
-                        }, (index + 1) * 1000);
-                    });
+    submitAnswer.addEventListener('click', () => {
+        const answer = riddleAnswer.value.trim().toLowerCase();
+        if (answer === 'keyboard') { // Correct answer
+            gameStatus.textContent = 'Correct! Heart Mending...';
+            gameStatus.style.color = '#f48fb1';
+            // Animate hearts merging
+            heartLeft.style.transform = 'translateX(25px)';
+            heartRight.style.transform = 'translateX(-25px)';
+            setTimeout(() => {
+                heartLeft.classList.add('merged');
+                heartRight.classList.add('merged');
+                heartLeft.style.transform = 'translateX(0)';
+                heartRight.style.transform = 'translateX(0)';
+            }, 500);
+            setTimeout(() => {
+                heartLeft.style.display = 'none';
+                heartRight.style.display = 'none';
+                nav.style.display = 'flex';
+                const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
+                floors.forEach((floorId, index) => {
                     setTimeout(() => {
-                        document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
-                    }, 1000);
-                }, 2000);
-            } else {
-                // Reset
-                heartLeft.style.left = '50px';
-                heartLeft.style.top = '50px';
-                heartLeft.style.right = 'auto';
-                heartRight.style.left = 'auto';
-                heartRight.style.right = '50px';
-                heartRight.style.top = '50px';
-                gameStatus.textContent = 'Pieces don\'t fit... Drag both into the glowing heart outline.';
-            }
-            draggedPiece = null;
+                        document.getElementById(floorId).style.display = 'flex';
+                        document.getElementById(floorId).style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById(floorId).style.opacity = '1';
+                        }, 100);
+                    }, (index + 1) * 1000);
+                });
+                setTimeout(() => {
+                    document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+            }, 2000);
+        } else {
+            riddleHint.style.display = 'block';
+            gameStatus.textContent = 'Not quite... Try again.';
         }
-    }
-
-    // Event Listeners for Mouse
-    [heartLeft, heartRight].forEach(piece => {
-        piece.addEventListener('mousedown', (e) => startDrag(e, piece));
     });
-    document.addEventListener('mousemove', moveDrag);
-    document.addEventListener('mouseup', endDrag);
-
-    // Event Listeners for Touch (Mobile)
-    [heartLeft, heartRight].forEach(piece => {
-        piece.addEventListener('touchstart', (e) => startDrag(e, piece));
-    });
-    document.addEventListener('touchmove', moveDrag);
-    document.addEventListener('touchend', endDrag);
 </script>
-</body>
-</html>
