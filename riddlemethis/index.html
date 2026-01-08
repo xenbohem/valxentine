@@ -1,0 +1,29 @@
+<div id="game-area">
+    <div id="riddle-container">
+        <p id="riddle-text">I have keys but open no locks. I have space but no room. You can enter, but you can't go outside. What am I?</p>
+        <input type="text" id="riddle-answer" placeholder="Your answer..." required>
+        <button id="submit-answer">Submit</button>
+        <p id="riddle-hint" style="display: none; color: #ba68c8;">Hint: Think digital...</p>
+    </div>
+    <div id="heart-container">
+        <svg id="heart-left" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#e91e63;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#ba68c8;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M50 20 C40 10, 20 10, 20 30 L20 50 C20 70, 50 90, 50 90 Z" fill="url(#leftGrad)" stroke="#f48fb1" stroke-width="2"/>
+        </svg>
+        <svg id="heart-right" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="rightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:#ba68c8;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            <path d="M50 20 C60 10, 80 10, 80 30 L80 50 C80 70, 50 90, 50 90 Z" fill="url(#rightGrad)" stroke="#f48fb1" stroke-width="2"/>
+        </svg>
+    </div>
+</div>
+<p id="game-status" style="margin-top: 20px; color: #ba68c8;">Solve the riddle to mend the heart and unlock...</p>
