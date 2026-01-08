@@ -348,12 +348,11 @@
             font-size: 0.8rem;
         }
 
-        /* Game Area (Unlock Floor) */
-       /* Game Area */
+/* Game Area */
 #game-area {
     position: relative;
     width: 400px;
-    height: 300px;
+    height: 350px; /* Increased height for target */
     margin: 20px auto;
     background: linear-gradient(45deg, rgba(233, 30, 99, 0.2), rgba(186, 104, 200, 0.3));
     border-radius: 10px;
@@ -362,12 +361,13 @@
     justify-content: center;
     align-items: center;
     box-shadow: 0 0 20px rgba(244, 143, 177, 0.5);
+    overflow: hidden; /* Prevent pieces from dragging outside */
 }
 
 #heart-container {
     position: relative;
-    width: 200px;
-    height: 100px;
+    width: 100%;
+    height: 100%;
 }
 
 .heart-piece {
@@ -377,21 +377,22 @@
     cursor: grab;
     transition: transform 0.3s;
     filter: drop-shadow(0 0 10px rgba(244, 143, 177, 0.5));
+    z-index: 10; /* Above target */
 }
 
-.heart-piece:active {
-    cursor: grabbing;
+.heart-piece:active, .heart-piece:hover {
     transform: scale(1.1);
+    cursor: grabbing;
 }
 
 #heart-left {
-    left: 0;
-    top: 0;
+    left: 50px;
+    top: 50px;
 }
 
 #heart-right {
-    right: 0;
-    top: 0;
+    right: 50px;
+    top: 50px;
 }
 
 #target-zone {
@@ -399,12 +400,31 @@
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
-    padding: 10px;
-    background: rgba(186, 104, 200, 0.5);
-    border-radius: 5px;
+    width: 200px;
+    height: 150px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    animation: pulse 2s infinite; /* Pulsing to draw attention */
+}
+
+#target-zone svg {
+    width: 120px;
+    height: 120px;
+}
+
+#target-zone p {
+    margin-top: 10px;
     color: #fce4ec;
-    font-size: 1rem;
+    font-size: 0.9rem;
     text-shadow: 0 0 10px rgba(244, 143, 177, 0.5);
+    text-align: center;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: translateX(-50%) scale(1); }
+    50% { transform: translateX(-50%) scale(1.05); }
 }
 
 /* Success Glow */
