@@ -594,8 +594,7 @@
             </div>
         </div>
     </div>
-
-    <script>
+   <script>
     // Elements
     const invitation = document.getElementById('invitation');
     const loading = document.getElementById('loading');
@@ -706,6 +705,7 @@
     // Game Elements
     const heartLeft = document.getElementById('heart-left');
     const heartRight = document.getElementById('heart-right');
+    const gameArea = document.getElementById('game-area');
     const gameStatus = document.getElementById('game-status');
     const nav = document.getElementById('nav');
     let draggedPiece = null;
@@ -716,10 +716,12 @@
         draggedPiece = piece;
         const clientX = e.clientX || (e.touches && e.touches[0].clientX);
         const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-        offsetX = clientX - piece.getBoundingClientRect().left;
-        offsetY = clientY - piece.getBoundingClientRect().top;
+        const rect = piece.getBoundingClientRect();
+        offsetX = clientX - rect.left;
+        offsetY = clientY - rect.top;
         piece.style.cursor = 'grabbing';
-        e.preventDefault(); // Prevent scrolling on touch
+        piece.style.zIndex = '20'; // Bring to front
+        e.preventDefault();
     }
 
     // Function to move dragging
@@ -727,9 +729,14 @@
         if (draggedPiece) {
             const clientX = e.clientX || (e.touches && e.touches[0].clientX);
             const clientY = e.clientY || (e.touches && e.touches[0].clientY);
-            draggedPiece.style.left = clientX - offsetX + 'px';
-            draggedPiece.style.top = clientY - offsetY + 'px';
-            draggedPiece.style.transform = 'none';
+            const gameRect = gameArea.getBoundingClientRect();
+            let newLeft = clientX - offsetX - gameRect.left;
+            let newTop = clientY - offsetY - gameRect.top;
+            // Constrain to game area
+            newLeft = Math.max(0, Math.min(newLeft, gameRect.width - draggedPiece.offsetWidth));
+            newTop = Math.max(0, Math.min(newTop, gameRect.height - draggedPiece.offsetHeight));
+            draggedPiece.style.left = newLeft + 'px';
+            draggedPiece.style.top = newTop + 'px';
         }
     }
 
@@ -737,6 +744,7 @@
     function endDrag() {
         if (draggedPiece) {
             draggedPiece.style.cursor = 'grab';
+            draggedPiece.style.zIndex = '10';
 
             // Check assembly: Pieces must overlap with target zone
             const leftRect = heartLeft.getBoundingClientRect();
@@ -779,10 +787,10 @@
                 // Reset
                 heartLeft.style.left = '50px';
                 heartLeft.style.top = '50px';
-                heartLeft.style.transform = 'none';
+                heartLeft.style.right = 'auto';
                 heartRight.style.left = 'auto';
+                heartRight.style.right = '50px';
                 heartRight.style.top = '50px';
-                heartRight.style.transform = 'none';
                 gameStatus.textContent = 'Pieces don\'t fit... Drag both into the glowing heart outline.';
             }
             draggedPiece = null;
