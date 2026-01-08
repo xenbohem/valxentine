@@ -667,38 +667,55 @@
         });
 
         // Drag End
-        document.addEventListener('mouseup', () => {
-            if (isDragging) {
-                isDragging = false;
-                icon.style.cursor = 'grab';
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        icon.style.cursor = 'grab';
 
-                // Check if icon is over target
-                const iconRect = icon.getBoundingClientRect();
-                const targetRect = target.getBoundingClientRect();
-                if (
-                    iconRect.left < targetRect.right &&
-                    iconRect.right > targetRect.left &&
-                    iconRect.top < targetRect.bottom &&
-                    iconRect.bottom > targetRect.top
-                ) {
-                    // Success: Unlock
-                    gameStatus.textContent = 'Network Unlocked! Descend into the depths...';
-                    gameStatus.style.color = '#f48fb1';
-                    target.classList.add('unlocked');
-                    icon.style.display = 'none'; // Hide icon
+        // Check if icon is over target
+        const iconRect = icon.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        if (
+            iconRect.left < targetRect.right &&
+            iconRect.right > targetRect.left &&
+            iconRect.top < targetRect.bottom &&
+            iconRect.bottom > targetRect.top
+        ) {
+            // Success: Unlock
+            gameStatus.textContent = 'Network Unlocked! Descend into the depths...';
+            gameStatus.style.color = '#f48fb1';
+            target.classList.add('unlocked');
+            icon.style.display = 'none'; // Hide icon
+
+            // Reveal nav menu after 2 seconds
+            setTimeout(() => {
+                nav.style.display = 'flex';
+                // Systematically reveal floors one by one
+                const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
+                floors.forEach((floorId, index) => {
                     setTimeout(() => {
-                        nav.style.display = 'flex'; // Reveal nav menu
-                        document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' }); // Auto-scroll to Greeting
-                    }, 2000);
-                } else {
-                    // Reset position
-                    icon.style.left = '50%';
-                    icon.style.top = '50%';
-                    icon.style.transform = 'translate(-50%, -50%)';
-                    gameStatus.textContent = 'Not quite... Try again.';
-                }
-            }
-        });
+                        document.getElementById(floorId).style.display = 'flex';
+                        // Optional: Add a fade-in effect
+                        document.getElementById(floorId).style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById(floorId).style.opacity = '1';
+                        }, 100);
+                    }, (index + 1) * 1000); // 1-second delay between each floor
+                });
+                // Auto-scroll to Greeting after first floor reveals
+                setTimeout(() => {
+                    document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+            }, 2000);
+        } else {
+            // Reset position
+            icon.style.left = '50%';
+            icon.style.top = '50%';
+            icon.style.transform = 'translate(-50%, -50%)';
+            gameStatus.textContent = 'Not quite... Try again.';
+        }
+    }
+});
     </script>
 </body>
 </html>
