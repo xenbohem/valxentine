@@ -208,7 +208,10 @@
             text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
             margin-bottom: 20px;
         }
-
+/* Hide all floors except Unlock initially */
+.floor:not(#unlock) {
+    display: none;
+}
         /* Horizontal Scrolling Gallery (Valentine Floor) */
         #image-gallery {
             display: flex;
