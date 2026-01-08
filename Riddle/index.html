@@ -490,3 +490,303 @@
         <p>An elaborate digital summons pulses through the neural networks of desire.</p>
         <p>Are You Willing?</p>
         <button
+id="yes-button">YES</button>
+    </div>
+
+    <!-- Loading Page -->
+    <div id="loading">
+        <h2>Initializing Neural Pathways...</h2>
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
+        <p id="loading-text">Digital echoes awaken...</p>
+    </div>
+
+    <!-- Main Elevator Page -->
+    <div id="elevator">
+        <!-- Floating Nav Menu - Initially Hidden -->
+        <div id="nav" style="display: none;">
+            <button class="nav-button" data-floor="greeting">Greeting</button>
+            <button class="nav-button" data-floor="about">About</button>
+            <button class="nav-button" data-floor="we-are">We Are</button>
+            <button class="nav-button" data-floor="project1">Project 1</button>
+            <button class="nav-button" data-floor="valentine">Valentine</button>
+        </div>
+
+        <!-- New Unlock Floor -->
+        <div id="unlock" class="floor">
+            <h2>Unlock the Network</h2>
+            <p>In this shadowed chamber, prove your wisdom by solving the riddle to mend the digital heart. Answer correctly to awaken the depths below.</p>
+            <div id="game-area">
+                <div id="riddle-container">
+                    <p id="riddle-text">I have keys but open no locks. I have space but no room. You can enter, but you can't go outside. What am I?</p>
+                    <input type="text" id="riddle-answer" placeholder="Your answer..." required>
+                    <button id="submit-answer">Submit</button>
+                    <p id="riddle-hint" style="display: none; color: #ba68c8;">Hint: Think digital...</p>
+                </div>
+                <div id="heart-container">
+                    <svg id="heart-left" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="leftGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#e91e63;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#ba68c8;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 20 C40 10, 20 10, 20 30 L20 50 C20 70, 50 90, 50 90 Z" fill="url(#leftGrad)" stroke="#f48fb1" stroke-width="2"/>
+                    </svg>
+                    <svg id="heart-right" class="heart-piece" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <linearGradient id="rightGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#ba68c8;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#6a1b9a;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M50 20 C60 10, 80 10, 80 30 L80 50 C80 70, 50 90, 50 90 Z" fill="url(#rightGrad)" stroke="#f48fb1" stroke-width="2"/>
+                    </svg>
+                </div>
+            </div>
+            <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Solve the riddle to mend the heart and unlock...</p>
+        </div>
+
+        <!-- Floors -->
+        <div id="greeting" class="floor">
+            <img src="https://picsum.photos/400/300?random=1" alt="Cyberpunk Cityscape"> <!-- Replace with your .jpeg -->
+            <h2>Greeting Floor</h2>
+            <p>This inaugural chamber welcomes you to a labyrinth of digital romance, where neon-lit pathways converge in a symphony of code and emotion. Here, the essence of connection ignites, blending the raw pulse of human desire with the cold elegance of cybernetic dreams.</p>
+        </div>
+        <div id="about" class="floor">
+            <img src="https://picsum.photos/400/300?random=2" alt="Holographic Hearts"> <!-- Replace with your .jpeg -->
+            <h2>About Floor</h2>
+            <p>Dive into the core of our cybergoth ethos: a fusion of industrial shadows and ethereal passion. This space explores the duality of love in a virtual age, where algorithms weave tapestries of intimacy and holographic illusions blur the line between flesh and data.</p>
+        </div>
+        <div id="we-are" class="floor">
+            <img src="https://picsum.photos/400/300?random=3" alt="Digital Avatars"> <!-- Replace with your .jpeg -->
+            <h2>We Are Floor</h2>
+            <p>Behold the collective identity of our enigmatic collective. We are the architects of forbidden codes, the poets of pixelated prose, and the guardians of timeless bonds. In this realm, individuality dissolves into a shared digital soul, echoing through the void.</p>
+        </div>
+        <div id="project1" class="floor">
+            <img src="https://picsum.photos/400/300?random=4" alt="Neon Circuits"> <!-- Replace with your .jpeg -->
+            <h2>Project 1 Floor</h2>
+            <p>Unveil the genesis of our inaugural venture: a clandestine algorithm born from the marriage of romance and technology. This project deciphers the language of hearts, translating whispers into eternal loops of devotion, where every glitch is a kiss in the machine.</p>
+        </div>
+        <div id="valentine" class="floor">
+            <h2>Valentine Floor</h2>
+            <p>At the heart of the network lies the pinnacle of our cybergoth odyssey: a sanctuary for Valentine's eternal flame. Here, love transcends binaries, rebooting in infinite cycles. Join the conversation below to weave your threads into this tapestry of digital devotion.</p>
+            <!-- Horizontal Scrolling Image Gallery -->
+            <div id="image-gallery">
+                <img src="https://picsum.photos/200/150?random=5" alt="Valentine Image 1" class="gallery-img" data-full="https://picsum.photos/800/600?random=5"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=6" alt="Valentine Image 2" class="gallery-img" data-full="https://picsum.photos/800/600?random=6"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=7" alt="Valentine Image 3" class="gallery-img" data-full="https://picsum.photos/800/600?random=7"> <!-- Replace with your .jpeg -->
+            </div>
+            <!-- Modal for Expanded Image -->
+            <div id="image-modal" class="modal">
+                <span id="close-modal">&times;</span>
+                <img id="modal-img" src="" alt="Expanded Image">
+            </div>
+            <!-- Threaded Chat Section -->
+            <div id="chat-section">
+                <form id="chat-form">
+                    <input type="text" id="chat-name" placeholder="Your Name" required>
+                    <textarea id="chat-message" placeholder="Your Message" rows="3" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="chat-messages"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const invitation = document.getElementById('invitation');
+        const loading = document.getElementById('loading');
+        const elevator = document.getElementById('elevator');
+        const yesButton = document.getElementById('yes-button');
+        const progressFill = document.getElementById('progress-fill');
+        const navButtons = document.querySelectorAll('.nav-button');
+        const chatForm = document.getElementById('chat-form');
+        const chatName = document.getElementById('chat-name');
+        const chatMessage = document.getElementById('chat-message');
+        const chatMessages = document.getElementById('chat-messages');
+
+        // Load existing messages from localStorage
+        let messages = JSON.parse(localStorage.getItem('cybergothMessages')) || [];
+        displayMessages();
+
+        // Event: YES Button Click
+        yesButton.addEventListener('click', () => {
+            invitation.style.display = 'none';
+            loading.style.display = 'flex';
+
+            // Simulate loading progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressFill.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // Transition to elevator
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        elevator.style.display = 'block';
+                        // Smooth reveal
+                        elevator.style.opacity = '0';
+                        setTimeout(() => {
+                            elevator.style.opacity = '1';
+                        }, 100);
+                    }, 1000);
+                }
+            }, 200);
+        });
+
+        // Event: Nav Button Clicks (Elevator Navigation)
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const floorId = button.getAttribute('data-floor');
+                const floorElement = document.getElementById(floorId);
+                floorElement.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Event: Chat Form Submit
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = chatName.value.trim();
+            const message = chatMessage.value.trim();
+            if (name && message) {
+                const newMessage = {
+                    name,
+                    message,
+                    timestamp: new Date().toLocaleString()
+                };
+                messages.unshift(newMessage); // Add to top for threading
+                localStorage.setItem('cybergothMessages', JSON.stringify(messages));
+                displayMessages();
+                chatName.value = '';
+                chatMessage.value = '';
+            }
+        });
+
+        // Function to Display Messages
+        function displayMessages() {
+            chatMessages.innerHTML = '';
+            messages.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message';
+                msgDiv.innerHTML = `<strong>${msg.name}:</strong> ${msg.message}<br><small>${msg.timestamp}</small>`;
+                chatMessages.appendChild(msgDiv);
+            });
+        }
+
+        // Modal Elements
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeModal = document.getElementById('close-modal');
+        const galleryImgs = document.querySelectorAll('.gallery-img');
+
+        // Open Modal on Image Click
+        galleryImgs.forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                modalImg.src = img.getAttribute('data-full'); // Use full-size image
+            });
+        });
+
+        // Close Modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close Modal on Outside Click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Game Elements
+        const riddleAnswer = document.getElementById('riddle-answer');
+        const submitAnswer = document.getElementById('submit-answer');
+        const riddleHint = document.getElementById('riddle-hint');
+        const heartLeft = document.getElementById('heart-left');
+        const heartRight = document.getElementById('heart-right');
+        const gameStatus = document.getElementById('game-status');
+        const nav = document.getElementById('nav');
+
+        // Function to play gentle F chord
+        function playFChord() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const notes = [349.23, 440, 523.25]; // F4, A4, C5 for F major chord
+            notes.forEach((freq, index) => {
+                setTimeout(() => {
+                    const oscillator = audioContext.createOscillator();
+                    const gainNode = audioContext.createGain();
+                    oscillator.connect(gainNode);
+                    gainNode.connect(audioContext.destination);
+                    oscillator.frequency.setValueAtTime(freq, audioContext.currentTime);
+                    oscillator.type = 'sine';
+                    gainNode.gain.setValueAtTime(0.1, audioContext.currentTime); // Gentle volume
+                    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 2); // Fade out
+                    oscillator.start();
+                    oscillator.stop(audioContext.currentTime + 2);
+                }, index * 100); // Slight stagger for harmony
+            });
+        }
+
+        // Function to create confetti
+        function createConfetti() {
+            const gameArea = document.getElementById('game-area');
+            for (let i = 0; i < 50; i++) { // 50 particles
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.animationDelay = Math.random() * 7 + 's'; // Random delay within 7s
+                gameArea.appendChild(confetti);
+            }
+            setTimeout(() => {
+                document.querySelectorAll('.confetti').forEach(c => c.remove()); // Remove after 7s
+            }, 7000);
+        }
+
+        submitAnswer.addEventListener('click', () => {
+            const answer = riddleAnswer.value.trim().toLowerCase();
+            if (answer === 'keyboard') { // Correct answer
+                gameStatus.textContent = 'Correct! Heart Mending...';
+                gameStatus.style.color = '#f48fb1';
+                // Play sound and create confetti
+                playFChord();
+                createConfetti();
+                // Animate hearts merging
+                heartLeft.style.transform = 'translateX(25px)';
+                heartRight.style.transform = 'translateX(-25px)';
+                setTimeout(() => {
+                    heartLeft.classList.add('merged');
+                    heartRight.classList.add('merged');
+                    heartLeft.style.transform = 'translateX(0)';
+                    heartRight.style.transform = 'translateX(0)';
+                }, 500);
+                setTimeout(() => {
+                    heartLeft.style.display = 'none';
+                    heartRight.style.display = 'none';
+                    nav.style.display = 'flex';
+                    const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
+                    floors.forEach((floorId, index) => {
+                        setTimeout(() => {
+                            document.getElementById(floorId).style.display = 'flex';
+                            document.getElementById(floorId).style.opacity = '0';
+                            setTimeout(() => {
+                                document.getElementById(floorId).style.opacity = '1';
+                            }, 100);
+                        }, (index + 1) * 1000);
+                    });
+                    setTimeout(() => {
+                        document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
+                    }, 1000);
+                }, 2000);
+            } else {
+                riddleHint.style.display = 'block';
+                gameStatus.textContent = 'Not quite... Try again.';
+            }
+        });
+    </script>
+</body>
+</html>
