@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cybergoth Invitation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet"> <!-- Esoteric serif font -->
+    <style>
+        /* Global Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Cinzel', serif; /* Esoteric, mystical font */
+            background: linear-gradient(135deg, #e91e63, #f48fb1, #ba68c8, #6a1b9a, #4a148c); /* Punch-red/rose-red to violet-purple ombre */
+            color: #fce4ec; /* Soft rose-pink for text */
+            overflow-x: hidden;
+            transition: all 1s ease;
+        }
+
+        /* Initial Invitation Page - Director's Cut Feel */
+        #invitation {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://via.placeholder.com/1920x1080/e91e63/fce4ec?text=Neon+City+Background') no-repeat center center/cover; /* Cyberpunk neon city image */
+            text-align: center;
+            position: relative;
+        }
+
+        #invitation::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(233, 30, 99, 0.4), rgba(186, 104, 200, 0.6)); /* Rose-red to violet overlay */
+            filter: blur(8px); /* Soft Gaussian blur */
+            z-index: -1;
+        }
+
+        #invitation::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 40%, rgba(0, 0, 0, 0.6) 70%, rgba(0, 0, 0, 0.9) 100%); /* Vignette: darkens edges, pops center */
+            pointer-events: none; /* Allows interaction with content below */
+            z-index: 0; /* Above background, below content */
+        }
+
+        #invitation h1 {
+            font-size: 3rem;
+            color: #f48fb1; /* Rose-red */
+            text-shadow: 0 0 20px rgba(244, 143, 177, 0.8), 0 0 40px rgba(244, 143, 177, 0.5); /* Neon glow */
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1; /* Ensures text pops above vignette */
+        }
+
+        #invitation p {
+            font-size: 1.5rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+            position: relative;
+            z-index: 1; /* Ensures text pops above vignette */
+        }
+
+        #yes-button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            background: linear-gradient(45deg, #e91e63, #ba68c8); /* Rose-red to violet gradient */
+            color: #fce4ec;
+            border: 2px solid #f48fb1;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(244, 143, 177, 0.8); /* Neon glow */
+            transition: box-shadow 0.3s, transform 0.3s;
+            position: relative;
+            z-index: 1; /* Ensures button pops above vignette */
+        }
+
+        #yes-button:hover {
+            box-shadow: 0 0 30px rgba(244, 143, 177, 1);
+            transform: scale(1.05);
+        }
+
+        /* Loading Page */
+        #loading {
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #c2185b, #7b1fa2); /* Darker rose-red to purple gradient */
+            color: #f48fb1;
+            text-align: center;
+        }
+
+        #loading h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 15px rgba(244, 143, 177, 0.7);
+        }
+
+        #progress-bar {
+            width: 300px;
+            height: 10px;
+            background: #616161; /* Grey */
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+
+        #progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e91e63, #ba68c8); /* Rose-red to violet gradient */
+            width: 0%;
+            transition: width 0.1s;
+            box-shadow: 0 0 10px rgba(244, 143, 177, 0.8);
+        }
+
+        #loading-text {
+            font-size: 1.2rem;
+            opacity: 0;
+            animation: reveal 2s infinite;
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+        }
+
+        @keyframes reveal {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Main Elevator Page */
+        #elevator {
+            display: none;
+            height: 100vh;
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            position: relative;
+        }
+
+        #elevator::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, rgba(233, 30, 99, 0.5), rgba(186, 104, 200, 0.4), rgba(74, 20, 140, 0.3)); /* Rose-red to violet-purple ombre overlay */
+            filter: blur(5px); /* Soft blur */
+            z-index: -1;
+        }
+
+        .floor {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            background: url('https://via.placeholder.com/1920x1080/c2185b/ba68c8?text=Cyber+Texture') no-repeat center center/cover; /* Cyber circuit texture */
+            border-bottom: 2px solid #f48fb1;
+            position: relative;
+        }
+
+        .floor::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(233, 30, 99, 0.1); /* Subtle rose-red see-through layer */
+            filter: blur(3px);
+            z-index: -1;
+        }
+
+        .floor img {
+            width: 300px;
+            height: auto;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            opacity: 0.8;
+            filter: blur(1px); /* Subtle blur for dreamy effect */
+            box-shadow: 0 0 15px rgba(244, 143, 177, 0.5);
+        }
+
+        .floor h2 {
+            font-size: 2.5rem;
+            color: #f48fb1;
+            text-shadow: 0 0 20px rgba(244, 143, 177, 0.8), 0 0 40px rgba(244, 143, 177, 0.5);
+            margin-bottom: 20px;
+        }
+
+        .floor p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            text-shadow: 0 0 10px rgba(233, 30, 99, 0.5);
+            margin-bottom: 20px;
+        }
+/* Hide all floors except Unlock initially */
+.floor:not(#unlock) {
+    display: none;
+}
+        /* Horizontal Scrolling Gallery (Valentine Floor) */
+        #image-gallery {
+            display: flex;
+            overflow-x: auto; /* Horizontal scrolling */
+            gap: 10px;
+            padding: 10px;
+            max-width: 100%;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: #f48fb1 #2d1b69; /* Custom scrollbar colors */
+        }
+
+        #image-gallery::-webkit-scrollbar {
+            height: 8px; /* Thin scrollbar */
+        }
+
+        #image-gallery::-webkit-scrollbar-track {
+            background: #2d1b69; /* Dark track */
+        }
+
+        #image-gallery::-webkit-scrollbar-thumb {
+            background: #f48fb1; /* Rose-red thumb */
+            border-radius: 4px;
+        }
+
+        .gallery-img {
+            width: 100px; /* Tiny thumbnails */
+            height: auto;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: transform 0.3s;
+            box-shadow: 0 0 10px rgba(244, 143, 177, 0.5);
+        }
+
+        .gallery-img:hover {
+            transform: scale(1.1); /* Subtle hover effect */
+        }
+
+        /* Modal for Expanded Image */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Dark overlay */
+            justify-content: center;
+            align-items: center;
+        }
+
+        #modal-img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(244, 143, 177, 0.8);
+        }
+
+        #close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: #f48fb1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            text-shadow: 0 0 10px rgba(244, 143, 177, 0.5);
+        }
+
+        #close-modal:hover {
+            color: #ba68c8;
+        }
+
+        /* Chat Section for Valentine Floor */
+        #chat-section {
+            width: 100%;
+            max-width: 600px;
+            margin-top: 20px;
+        }
+
+        #chat-form {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #chat-form input, #chat-form textarea {
+            padding: 10px;
+            border: 1px solid #f48fb1;
+            border-radius: 5px;
+            background: rgba(186, 104, 200, 0.2);
+            color: #fce4ec;
+            font-family: 'Cinzel', serif;
+        }
+
+        #chat-form button {
+            padding: 10px;
+            background: linear-gradient(45deg, #e91e63, #ba68c8);
+            color: #fce4ec;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(244, 143, 177, 0.6);
+            transition: box-shadow 0.3s;
+        }
+
+        #chat-form button:hover {
+            box-shadow: 0 0 20px rgba(244, 143, 177, 0.9);
+        }
+
+        #chat-messages {
+            max-height: 300px;
+            overflow-y: auto;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 5px;
+            padding: 10px;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 10px;
+            background: rgba(233, 30, 99, 0.2);
+            border-radius: 5px;
+            text-align: left;
+        }
+
+        .message strong {
+            color: #f48fb1;
+        }
+
+        .message small {
+            color: #ba68c8;
+            font-size: 0.8rem;
+        }
+
+        /* Game Area (Unlock Floor) */
+        #game-area {
+            position: relative;
+            width: 400px;
+            height: 300px;
+            margin: 20px auto;
+            background: linear-gradient(45deg, rgba(233, 30, 99, 0.2), rgba(186, 104, 200, 0.3));
+            border-radius: 10px;
+            border: 2px solid #f48fb1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(244, 143, 177, 0.5);
+        }
+
+        .target {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            width: 80px;
+            height: 80px;
+            background: radial-gradient(circle, rgba(186, 104, 200, 0.8), rgba(74, 20, 140, 1));
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fce4ec;
+            font-size: 1.5rem;
+            text-shadow: 0 0 10px rgba(244, 143, 177, 0.8);
+            animation: pulse 2s infinite; /* Pulsing effect */
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .icon {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 3rem;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.3s;
+            text-shadow: 0 0 15px rgba(244, 143, 177, 0.8);
+        }
+
+        .icon:active {
+            cursor: grabbing;
+            transform: scale(1.2);
+        }
+
+        /* Success Glow */
+        .unlocked {
+            animation: glow 1s ease-in-out;
+        }
+
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.5); }
+            50% { box-shadow: 0 0 40px rgba(244, 143, 177, 1); }
+            100% { box-shadow: 0 0 20px rgba(244, 143, 177, 0.5); }
+        }
+
+        /* Floating Nav Menu */
+        #nav {
+            position: fixed;
+            top: 50%;
+            right: 20px;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .nav-button {
+            padding: 10px 15px;
+            background: linear-gradient(45deg, #e91e63, #ba68c8); /* Rose-red to violet gradient */
+            color: #fce4ec;
+            border: 1px solid #f48fb1;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            box-shadow: 0 0 15px rgba(244, 143, 177, 0.6);
+            transition: box-shadow 0.3s, transform 0.3s;
+        }
+
+        .nav-button:hover {
+            box-shadow: 0 0 25px rgba(244, 143, 177, 0.9);
+            transform: scale(1.1);
+        }
+
+        /* Hide elements initially */
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Initial Invitation Page -->
+    <div id="invitation">
+        <h1>🔮 Xen's Invitation 🔮</h1>
+        <p>An elaborate digital message pulses through heartfelt networks.</p>
+        <p>Receive The Message?</p>
+        <button id="yes-button">YES</button>
+    </div>
+
+    <!-- Loading Page -->
+    <div id="loading">
+        <h2>Initializing Heart Pathways...</h2>
+        <div id="progress-bar">
+            <div id="progress-fill"></div>
+        </div>
+        <p id="loading-text">Valxentine awakens...</p>
+    </div>
+
+    <!-- Main Elevator Page -->
+    <div id="elevator">
+        <!-- Floating Nav Menu - Initially Hidden -->
+        <div id="nav" style="display: none;">
+            <button class="nav-button" data-floor="greeting">Greeting</button>
+            <button class="nav-button" data-floor="about">About</button>
+            <button class="nav-button" data-floor="we-are">We Are</button>
+            <button class="nav-button" data-floor="project1">Project 1</button>
+            <button class="nav-button" data-floor="valentine">Valentine</button>
+        </div>
+
+        <!-- New Unlock Floor -->
+        <div id="unlock" class="floor">
+            <h2>Unlock the Network</h2>
+            <p>In this chamber, align the digital heart with the Valxentine portal. Drag the icon to its destined place to unlock it.</p>
+            <div id="game-area">
+                <div id="target" class="target">🌀 Portal</div> <!-- Target area -->
+                <div id="icon" class="icon" draggable="true">💖</div> <!-- Draggable icon -->
+            </div>
+            <p id="game-status" style="margin-top: 20px; color: #ba68c8;">Drag the heart into the portal to unlock...</p>
+        </div>
+
+        <!-- Floors -->
+        <div id="greeting" class="floor">
+            <img src="https://picsum.photos/400/300?random=1" alt="Cyberpunk Cityscape"> <!-- Replace with your .jpeg -->
+            <h2>Greetings</h2>
+            <p>Welcome to Xen's digital Valentine realm, where valentine and Xen fuse together for one time in this year of 2026.</p>
+        </div>
+        <div id="about" class="floor">
+            <img src="https://picsum.photos/400/300?random=2" alt="Holographic Hearts"> <!-- Replace with your .jpeg -->
+            <h2>About Val(xen)tine</h2>
+            <p>Dive into the core of our parallel atmosphere: a fusion of quests and lore. This space explores the duality of creation and love through quests and lore.</p>
+        </div>
+        <div id="we-are" class="floor">
+            <img src="https://picsum.photos/400/300?random=3" alt="Digital Avatars"> <!-- Replace with your .jpeg -->
+            <h2>We Are Love</h2>
+            <p>Behold the collective identity of our enigmatic collective. We are the architects of unseen codes, the poets of pixelated prose, and the guardians of timeless bonds. In this realm, individuality dissolves into a shared art, unity in collaboration.</p>
+        </div>
+        <div id="project1" class="floor">
+            <img src="https://picsum.photos/400/300?random=4" alt="Neon Circuits"> <!-- Replace with your .jpeg -->
+            <h2>Project Chimera</h2>
+            <p>Unveil Xen's venture: a science experiment gone wrong but the subjects hero has other plans for them. This project is extensive.</p>
+        </div>
+        <div id="valentine" class="floor">
+            <h2>Valentine Floor</h2>
+            <p>At the heart of the network lies the pinnacle of a sanctuary for Valentine's eternal flame. Here, love transcends binaries, rebooting in infinite cycles. Join the conversation below to weave your threads into this tapestry of digital creation.</p>
+            <!-- Horizontal Scrolling Image Gallery -->
+            <div id="image-gallery">
+                <img src="https://picsum.photos/200/150?random=5" alt="Valentine Image 1" class="gallery-img" data-full="https://picsum.photos/800/600?random=5"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=6" alt="Valentine Image 2" class="gallery-img" data-full="https://picsum.photos/800/600?random=6"> <!-- Replace with your .jpeg -->
+                <img src="https://picsum.photos/200/150?random=7" alt="Valentine Image 3" class="gallery-img" data-full="https://picsum.photos/800/600?random=7"> <!-- Replace with your .jpeg -->
+            </div>
+            <!-- Modal for Expanded Image -->
+            <div id="image-modal" class="modal">
+                <span id="close-modal">&times;</span>
+                <img id="modal-img" src="" alt="Expanded Image">
+            </div>
+            <!-- Threaded Chat Section -->
+            <div id="chat-section">
+                <form id="chat-form">
+                    <input type="text" id="chat-name" placeholder="Your Name" required>
+                    <textarea id="chat-message" placeholder="Your Message" rows="3" required></textarea>
+                    <button type="submit">Send Message</button>
+                </form>
+                <div id="chat-messages"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Elements
+        const invitation = document.getElementById('invitation');
+        const loading = document.getElementById('loading');
+        const elevator = document.getElementById('elevator');
+        const yesButton = document.getElementById('yes-button');
+        const progressFill = document.getElementById('progress-fill');
+        const navButtons = document.querySelectorAll('.nav-button');
+        const chatForm = document.getElementById('chat-form');
+        const chatName = document.getElementById('chat-name');
+        const chatMessage = document.getElementById('chat-message');
+        const chatMessages = document.getElementById('chat-messages');
+
+        // Load existing messages from localStorage
+        let messages = JSON.parse(localStorage.getItem('cybergothMessages')) || [];
+        displayMessages();
+
+        // Event: YES Button Click
+        yesButton.addEventListener('click', () => {
+            invitation.style.display = 'none';
+            loading.style.display = 'flex';
+
+            // Simulate loading progress
+            let progress = 0;
+            const interval = setInterval(() => {
+                progress += 10;
+                progressFill.style.width = progress + '%';
+                if (progress >= 100) {
+                    clearInterval(interval);
+                    // Transition to elevator
+                    setTimeout(() => {
+                        loading.style.display = 'none';
+                        elevator.style.display = 'block';
+                        // Smooth reveal
+                        elevator.style.opacity = '0';
+                        setTimeout(() => {
+                            elevator.style.opacity = '1';
+                        }, 100);
+                    }, 1000);
+                }
+            }, 200);
+        });
+
+        // Event: Nav Button Clicks (Elevator Navigation)
+        navButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const floorId = button.getAttribute('data-floor');
+                const floorElement = document.getElementById(floorId);
+                floorElement.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+
+        // Event: Chat Form Submit
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = chatName.value.trim();
+            const message = chatMessage.value.trim();
+            if (name && message) {
+                const newMessage = {
+                    name,
+                    message,
+                    timestamp: new Date().toLocaleString()
+                };
+                messages.unshift(newMessage); // Add to top for threading
+                localStorage.setItem('cybergothMessages', JSON.stringify(messages));
+                displayMessages();
+                chatName.value = '';
+                chatMessage.value = '';
+            }
+        });
+
+        // Function to Display Messages
+        function displayMessages() {
+            chatMessages.innerHTML = '';
+            messages.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'message';
+                msgDiv.innerHTML = `<strong>${msg.name}:</strong> ${msg.message}<br><small>${msg.timestamp}</small>`;
+                chatMessages.appendChild(msgDiv);
+            });
+        }
+
+        // Modal Elements
+        const modal = document.getElementById('image-modal');
+        const modalImg = document.getElementById('modal-img');
+        const closeModal = document.getElementById('close-modal');
+        const galleryImgs = document.querySelectorAll('.gallery-img');
+
+        // Open Modal on Image Click
+        galleryImgs.forEach(img => {
+            img.addEventListener('click', () => {
+                modal.style.display = 'flex';
+                modalImg.src = img.getAttribute('data-full'); // Use full-size image
+            });
+        });
+
+        // Close Modal
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close Modal on Outside Click
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+
+        // Game Elements
+        const icon = document.getElementById('icon');
+        const target = document.getElementById('target');
+        const gameStatus = document.getElementById('game-status');
+        const nav = document.getElementById('nav');
+        let isDragging = false;
+        let offsetX, offsetY;
+
+        // Drag Start
+        icon.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            offsetX = e.clientX - icon.offsetLeft;
+            offsetY = e.clientY - icon.offsetTop;
+            icon.style.cursor = 'grabbing';
+        });
+
+        // Drag Move
+        document.addEventListener('mousemove', (e) => {
+            if (isDragging) {
+                icon.style.left = e.clientX - offsetX + 'px';
+                icon.style.top = e.clientY - offsetY + 'px';
+                icon.style.transform = 'none'; // Remove centering
+            }
+        });
+
+        // Drag End
+document.addEventListener('mouseup', () => {
+    if (isDragging) {
+        isDragging = false;
+        icon.style.cursor = 'grab';
+
+        // Check if icon is over target
+        const iconRect = icon.getBoundingClientRect();
+        const targetRect = target.getBoundingClientRect();
+        if (
+            iconRect.left < targetRect.right &&
+            iconRect.right > targetRect.left &&
+            iconRect.top < targetRect.bottom &&
+            iconRect.bottom > targetRect.top
+        ) {
+            // Success: Unlock
+            gameStatus.textContent = 'Network Unlocked! Descend into the depths...';
+            gameStatus.style.color = '#f48fb1';
+            target.classList.add('unlocked');
+            icon.style.display = 'none'; // Hide icon
+
+            // Reveal nav menu after 2 seconds
+            setTimeout(() => {
+                nav.style.display = 'flex';
+                // Systematically reveal floors one by one
+                const floors = ['greeting', 'about', 'we-are', 'project1', 'valentine'];
+                floors.forEach((floorId, index) => {
+                    setTimeout(() => {
+                        document.getElementById(floorId).style.display = 'flex';
+                        // Optional: Add a fade-in effect
+                        document.getElementById(floorId).style.opacity = '0';
+                        setTimeout(() => {
+                            document.getElementById(floorId).style.opacity = '1';
+                        }, 100);
+                    }, (index + 1) * 1000); // 1-second delay between each floor
+                });
+                // Auto-scroll to Greeting after first floor reveals
+                setTimeout(() => {
+                    document.getElementById('greeting').scrollIntoView({ behavior: 'smooth' });
+                }, 1000);
+            }, 2000);
+        } else {
+            // Reset position
+            icon.style.left = '50%';
+            icon.style.top = '50%';
+            icon.style.transform = 'translate(-50%, -50%)';
+            gameStatus.textContent = 'Not quite... Try again.';
+        }
+    }
+});
+    </script>
+</body>
+</html>
